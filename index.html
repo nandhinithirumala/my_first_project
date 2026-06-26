@@ -1,0 +1,721 @@
+﻿<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CrowdSense Hyderabad — Smart Tourism Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Cinzel:wght@700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ===== SPLASH SCREEN ===== -->
+<div id="splash">
+  <div class="splash-rings"></div>
+  <div class="splash-kicker">Advanced Visitor Monitoring Platform</div>
+  <div class="splash-logo">Tourist Crowd</div>
+  <div class="splash-sub">Management System</div>
+  <div class="splash-tagline">Intelligent crowd forecasting and destination planning</div>
+  <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+</div>
+
+<!-- ===== PORTAL SELECTION ===== -->
+<div id="portal-select">
+  <!-- Hidden admin trigger — top right corner -->
+  <button id="admin-secret-trigger" type="button" onclick="openAdminLogin()" title="Open admin login" aria-label="Open admin login" style="position:absolute;top:16px;right:20px;width:28px;height:28px;cursor:pointer;opacity:0.18;transition:opacity 0.3s;z-index:10;background:none;border:none;padding:0;" onmouseenter="this.style.opacity=&#39;0.7&#39;" onmouseleave="this.style.opacity=&#39;0.18&#39;">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#D4A843" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+      <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+    </svg>
+  </button>
+  <div class="portal-heading">Welcome to CrowdSense</div>
+  <div class="portal-sub-heading">HYDERABAD SMART TOURISM INTELLIGENCE SYSTEM</div>
+  <div class="portal-grid" style="grid-template-columns:1fr; max-width:380px;">
+    <div class="portal-card" onclick="openUserPortal()">
+      <span class="portal-icon">🧭</span>
+      <div class="portal-title">Visitor Portal</div>
+      <div class="portal-desc">Plan your visit with real-time crowd predictions, place information, and smart navigation.</div>
+    </div>
+  </div>
+  <div class="text-xs" style="margin-top:32px; letter-spacing:2px; text-align:center;">
+    "Where Every Journey Begins With Intelligence"
+  </div>
+</div>
+
+<!-- ===== MAIN APP ===== -->
+<div id="app" class="visible">
+
+<!-- ===== USER PORTAL ===== -->
+<div id="user-portal">
+
+  <!-- Navbar -->
+  <nav id="main-nav">
+    <div class="nav-logo">CrowdSense <span>HYDERABAD</span></div>
+    <div class="nav-links">
+      <button class="nav-link active" onclick="scrollToPlaces()">Places</button>
+      <button class="nav-link" onclick="scrollToAbout()">About</button>
+      <button class="nav-link" onclick="scrollToFuture()">Future</button>
+    </div>
+    <div class="nav-right">
+      <span class="nav-user" id="nav-user-name"></span>
+      <button class="btn btn-secondary" onclick="showPortalSelect()" style="padding:6px 14px; font-size:12px;">Switch Portal</button>
+      <!-- Hidden admin access icon -->
+      <button type="button" onclick="openAdminLogin()" title="Open admin login" aria-label="Open admin login" style="width:26px;height:26px;cursor:pointer;opacity:0.15;transition:opacity 0.3s;margin-left:4px;flex-shrink:0;background:none;border:none;padding:0;" onmouseenter="this.style.opacity=&#39;0.6&#39;" onmouseleave="this.style.opacity=&#39;0.15&#39;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#D4A843" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero" id="home-section">
+    <div class="hero-content">
+      <div class="hero-eyebrow">Smart Tourism Intelligence</div>
+      <h1 class="hero-title">Plan Smarter.<br>Explore Wiser.</h1>
+
+      <div class="hero-quote">"The City of Pearls deserves a smarter visit"</div>
+      <button class="btn btn-primary" onclick="scrollToPlaces()" style="font-size:16px; padding:14px 36px;">
+        🔍 Check Crowd Now
+      </button>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">5</div>
+          <div class="hero-stat-label">Iconic Places</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">3 Yrs</div>
+          <div class="hero-stat-label">Crowd History</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">95%</div>
+          <div class="hero-stat-label">Forecast Accuracy</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">Smart</div>
+          <div class="hero-stat-label">Crowd Forecast</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- User Info Form + Place Search -->
+  <div class="section" id="places-section">
+    <div class="section-title">Predict Crowd at Your Destination</div>
+    <div class="section-sub">Enter your details to get personalized crowd predictions and navigation</div>
+
+    <div class="user-form-card" id="user-form-card">
+      <div class="section-title" style="font-size:18px; margin-bottom:4px;">Your Details</div>
+      <div class="section-sub" style="margin-bottom:20px;">Required for personalized results</div>
+      <div class="user-form-grid">
+        <div class="form-group">
+          <label class="form-label">City</label>
+          <select class="form-input" id="city-select" onchange="changeCity(this.value)">
+            <option value="hyderabad" selected>Hyderabad</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input class="form-input" id="user-name-inp" type="text" placeholder="e.g. Ravi Kumar" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Choose Place</label>
+          <select class="form-input" id="place-select">
+            <option value="">-- Select a Place --</option>
+            <option value="hussain_sagar">Hussain Sagar Lake</option>
+            <option value="golconda_fort">Golconda Fort</option>
+            <option value="charminar">Charminar</option>
+            <option value="osman_sagar">Osman Sagar (Gandipet)</option>
+            <option value="chowmahalla">Chowmahalla Palace</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Visit Date</label>
+          <input class="form-input" id="visit-date" type="date">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Visit Time</label>
+          <select class="form-input" id="visit-time">
+            <option value="morning">Morning (9AM - 12PM)</option>
+            <option value="afternoon">Afternoon (12PM - 4PM)</option>
+            <option value="evening">Evening (4PM - 7PM)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group mt-16">
+        <label class="form-label">Your Location</label>
+        <div class="location-badge" id="location-badge">
+          📍 <span id="location-text">Click to access location</span>
+          <button class="btn btn-secondary" style="padding:4px 12px; font-size:11px; margin-left:auto;" onclick="getLocation()">📍 Get Location</button>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-full mt-16" onclick="checkCrowd()" style="font-size:15px; padding:14px;">
+        🔮 Predict Crowd &amp; View Place
+      </button>
+
+      <div class="toolbar-grid">
+        <div class="form-group" style="margin:0;">
+          <label class="form-label">Search Landmarks</label>
+          <input class="form-input" id="place-search" type="text" placeholder="Search by place, category, or highlight" oninput="applyPlaceFilters()">
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label class="form-label">Crowd Filter</label>
+          <select class="form-input" id="crowd-filter" onchange="applyPlaceFilters()">
+            <option value="all">All crowd levels</option>
+            <option value="low">Low crowd</option>
+            <option value="medium">Moderate crowd</option>
+            <option value="high">High crowd</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label class="form-label">Budget Filter</label>
+          <select class="form-input" id="budget-filter" onchange="applyPlaceFilters()">
+            <option value="all">All budgets</option>
+            <option value="free">Free / low cost</option>
+            <option value="paid">Paid places</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="chip-row">
+        <button class="chip-btn active" data-filter-chip="all" onclick="setQuickFilter('all', this)">All Places</button>
+        <button class="chip-btn" data-filter-chip="family" onclick="setQuickFilter('family', this)">Family Friendly</button>
+        <button class="chip-btn" data-filter-chip="nearby" onclick="setQuickFilter('nearby', this)">Nearby First</button>
+        <button class="chip-btn" data-filter-chip="favorites" onclick="setQuickFilter('favorites', this)">Favorites</button>
+      </div>
+    </div>
+
+    <div class="smart-tools-grid">
+      <div class="info-card" style="margin:0;">
+        <div class="info-card-title">🆚 Compare Places</div>
+        <div class="form-group">
+          <label class="form-label">Select up to 3 places</label>
+          <select class="form-input" id="compare-place-select">
+            <option value="">-- Select a Place --</option>
+          </select>
+        </div>
+        <button class="btn btn-secondary btn-full" onclick="addComparePlace()">Add to Compare</button>
+        <div id="compare-panel"></div>
+      </div>
+
+      <div class="info-card" style="margin:0;">
+        <div class="info-card-title">⭐ Trip Planner</div>
+        <div style="font-size:13px;color:var(--text2);">Save landmarks to build a quick faculty demo itinerary.</div>
+        <div id="trip-planner-panel"></div>
+      </div>
+
+      <div class="info-card" style="margin:0;">
+        <div class="info-card-title">📄 Downloadable Summary</div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.7;">
+          Generate a printable smart-visit report with predicted crowd, route estimate, best time, and nearby suggestions.
+        </div>
+        <button class="btn btn-primary btn-full mt-16" onclick="downloadCurrentReport()">Download Current Report</button>
+        <div class="report-note">Open any place first to export its summary.</div>
+      </div>
+    </div>
+
+    <!-- All Places Overview -->
+    <div class="mt-24">
+      <div class="section-title" style="font-size:18px; margin-bottom:4px;">All Hyderabad Landmarks</div>
+      <div class="section-sub" style="margin-bottom:20px;">Click any card for full details, history, and crowd forecast</div>
+      <div class="places-grid" id="places-grid"></div>
+    </div>
+  </div>
+
+  <!-- About Section -->
+  <div class="section" id="about-section">
+    <div class="info-card">
+      <div class="info-card-title">About CrowdSense</div>
+      <p class="history-text">
+        CrowdSense is a smart tourism intelligence platform designed to help visitors plan their trips to iconic landmarks with data-driven confidence. 
+        Using the <strong>Holt-Winters Triple Exponential Smoothing</strong> algorithm — a time series forecasting method that accounts for trends, seasonality, and level changes — 
+        we analyze 3+ years of crowd data to predict congestion levels at any given time.
+      </p>
+      <div class="divider"></div>
+      <div class="tips-grid">
+        <div class="tip-card tip-card-clickable" onclick="openAboutModal(&#39;holtwinters&#39;)">
+          <span class="tip-icon">📊</span>
+          <div class="tip-title">Holt-Winters Model <span style="float:right;font-size:14px;opacity:0.5;">›</span></div>
+          We use triple exponential smoothing to capture daily, weekly, and monthly crowd patterns.
+          <div style="margin-top:8px;font-size:11px;color:var(--gold);letter-spacing:1px;">CLICK TO LEARN MORE</div>
+        </div>
+        <div class="tip-card tip-card-clickable" onclick="openAboutModal(&#39;video&#39;)">
+          <span class="tip-icon">🎥</span>
+          <div class="tip-title">Video Analysis <span style="float:right;font-size:14px;opacity:0.5;">›</span></div>
+          Admin portal integrates video uploads for crowd counting and dataset updates.
+          <div style="margin-top:8px;font-size:11px;color:var(--gold);letter-spacing:1px;">CLICK TO LEARN MORE</div>
+        </div>
+        <div class="tip-card tip-card-clickable" onclick="openAboutModal(&#39;navigation&#39;)">
+          <span class="tip-icon">🗺️</span>
+          <div class="tip-title">Live Navigation <span style="float:right;font-size:14px;opacity:0.5;">›</span></div>
+          One-click directions from your current location directly via Google Maps.
+          <div style="margin-top:8px;font-size:11px;color:var(--gold);letter-spacing:1px;">CLICK TO LEARN MORE</div>
+        </div>
+        <div class="tip-card tip-card-clickable" onclick="openAboutModal(&#39;alerts&#39;)">
+          <span class="tip-icon">🔔</span>
+          <div class="tip-title">Crowd Alerts <span style="float:right;font-size:14px;opacity:0.5;">›</span></div>
+          Real-time risk levels — Low, Medium, High — based on historical + predicted data.
+          <div style="margin-top:8px;font-size:11px;color:var(--gold);letter-spacing:1px;">CLICK TO LEARN MORE</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- About Feature Modals -->
+  <div class="modal-overlay" id="about-modal-overlay" onclick="closeAboutModal(event)">
+    <div class="modal" style="max-width:560px;width:94vw;" onclick="event.stopPropagation()">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px;">
+        <div>
+          <div class="modal-title" id="about-modal-title"></div>
+          <div class="modal-sub" id="about-modal-sub"></div>
+        </div>
+        <button onclick="closeAboutModal()" style="background:none;border:none;color:var(--text3);font-size:22px;cursor:pointer;padding:0;line-height:1;margin-top:2px;">✕</button>
+      </div>
+      <div id="about-modal-body" style="font-size:14px;color:var(--text2);line-height:1.8;"></div>
+    </div>
+  </div>
+
+  <!-- Future Extensions -->
+  <div class="section" id="future-section">
+    <div class="section-title">Future Roadmap</div>
+    <div class="section-sub">Planned expansions in collaboration with Telangana Tourism &amp; Government</div>
+    <div class="tips-grid" style="grid-template-columns: repeat(auto-fill, minmax(250px,1fr));">
+      <div class="tip-card" style="border-color: rgba(52,152,219,0.2);">
+        <span class="tip-icon">📡</span>
+        <div class="tip-title">Live CCTV Integration <span class="future-badge" style="margin-left:6px;">Planned</span></div>
+        Direct integration with government CCTV cameras for automated real-time crowd counting.
+      </div>
+      <div class="tip-card" style="border-color: rgba(52,152,219,0.2);">
+        <span class="tip-icon">🤖</span>
+        <div class="tip-title">AI Vision Models <span class="future-badge" style="margin-left:6px;">R&amp;D</span></div>
+        Deep learning-based crowd density estimation from webcam video using YOLOv8.
+      </div>
+      <div class="tip-card" style="border-color: rgba(52,152,219,0.2);">
+        <span class="tip-icon">🏛️</span>
+        <div class="tip-title">Govt Collaboration <span class="future-badge" style="margin-left:6px;">In Talk</span></div>
+        MoU with Telangana Tourism for official data sharing and monument management.
+      </div>
+      <div class="tip-card" style="border-color: rgba(52,152,219,0.2);">
+        <span class="tip-icon">📱</span>
+        <div class="tip-title">Mobile App <span class="future-badge" style="margin-left:6px;">Planned</span></div>
+        Native iOS and Android app with push alerts and offline map support.
+      </div>
+      <div class="tip-card" style="border-color: rgba(52,152,219,0.2);">
+        <span class="tip-icon">🌐</span>
+        <div class="tip-title">Multi-City Expansion <span class="future-badge" style="margin-left:6px;">Phase 2</span></div>
+        Expand to Warangal, Vijayawada, and all major Telangana tourism sites.
+      </div>
+      <div class="tip-card" style="border-color: rgba(52,152,219,0.2);">
+        <span class="tip-icon">🎟️</span>
+        <div class="tip-title">Smart Ticketing <span class="future-badge" style="margin-left:6px;">Phase 2</span></div>
+        Time-slot booking integration to reduce peak congestion through distributed entry.
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo">CrowdSense Hyderabad</div>
+    <div class="footer-text">
+      Smart Tourism Intelligence Platform for the City of Pearls<br>
+      Powered by Holt-Winters Forecasting · Built for Hyderabad
+    </div>
+    <div class="footer-links">
+      <a class="footer-link" href="#about-section">Privacy Policy</a>
+      <a class="footer-link" href="#about-section">Terms of Use</a>
+      <a class="footer-link" href="#about-section">Contact</a>
+      <a class="footer-link" href="#future-section">API Access</a>
+      <a class="footer-link" href="#future-section">Government Portal</a>
+    </div>
+    <div class="footer-tagline">"Know Before You Go — Visit Smart, Visit Happy"</div>
+  </footer>
+
+</div><!-- /user-portal -->
+
+<!-- ===== DETAIL PAGE ===== -->
+<div id="detail-page">
+  <nav id="detail-nav" style="position:sticky;top:0;z-index:500;background:rgba(255,253,248,0.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--border2);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;">
+    <div class="nav-logo">CrowdSense <span>HYDERABAD</span></div>
+    <button class="nav-link" onclick="backToHome()">← Back</button>
+  </nav>
+  <div id="detail-content"></div>
+</div>
+
+<!-- ===== ADMIN PORTAL ===== -->
+<div id="admin-portal">
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <div class="admin-sidebar">
+      <div class="admin-logo">
+        <div class="admin-logo-title">CrowdSense</div>
+        <div class="admin-logo-sub">ADMIN PANEL</div>
+      </div>
+      <button class="admin-nav-item active" onclick="adminTab(&#39;dashboard&#39;)">
+        <span class="admin-nav-icon">📊</span> Dashboard
+      </button>
+      <button class="admin-nav-item" onclick="adminTab(&#39;places&#39;)">
+        <span class="admin-nav-icon">🏛️</span> Manage Places
+      </button>
+      <button class="admin-nav-item" onclick="adminTab(&#39;video&#39;)">
+        <span class="admin-nav-icon">🎥</span> Live Feeds
+      </button>
+      <button class="admin-nav-item" onclick="adminTab(&#39;crowd&#39;)">
+        <span class="admin-nav-icon">👥</span> Crowd Data
+      </button>
+      <button class="admin-nav-item" onclick="adminTab(&#39;forecast&#39;)">
+        <span class="admin-nav-icon">🔮</span> Forecast
+      </button>
+      <button class="admin-nav-item" onclick="adminTab(&#39;add-place&#39;)">
+        <span class="admin-nav-icon">➕</span> Add New Place
+      </button>
+      <button class="admin-nav-item" onclick="adminTab(&#39;settings&#39;)">
+        <span class="admin-nav-icon">⚙️</span> Settings
+      </button>
+      <div style="margin-top:auto; padding: 20px;">
+        <button class="btn btn-secondary btn-full" onclick="showPortalSelect()" style="font-size:12px; padding:8px;">← Exit Admin</button>
+      </div>
+    </div>
+
+    <!-- Admin Main -->
+    <div class="admin-main">
+      <!-- Dashboard -->
+      <div id="admin-dashboard" class="admin-section show">
+        <div class="admin-header">
+          <div class="admin-title">Dashboard Overview</div>
+          <div class="admin-subtitle">Real-time crowd intelligence across all Hyderabad landmarks</div>
+        </div>
+        <div class="admin-stats-row" id="admin-stats-row"></div>
+        <div class="info-card">
+          <div class="info-card-title">Today's Crowd Status — All Places</div>
+          <div class="admin-table-wrapper">
+            <table class="admin-table" id="admin-crowd-table">
+              <thead>
+                <tr>
+                  <th>Place</th><th>Current Crowd</th><th>Risk Level</th>
+                  <th>Peak Today</th><th>Vs. Yesterday</th><th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="admin-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Places Management -->
+      <div id="admin-places" class="admin-section">
+        <div class="admin-header">
+          <div class="admin-title">Manage Places</div>
+          <div class="admin-subtitle">Edit information, photos, and timings for each landmark. Changes reflect immediately in the user portal.</div>
+        </div>
+        <div id="admin-places-list"></div>
+      </div>
+
+      <!-- Edit Place Modal (inline) -->
+      <div id="edit-place-modal" style="display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.88);align-items:center;justify-content:center;backdrop-filter:blur(8px);">
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius2);padding:36px;width:min(700px,96vw);max-height:90vh;overflow-y:auto;box-shadow:var(--shadow);">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+            <div style="font-family:&#39;Cinzel&#39;,serif;font-size:20px;color:var(--gold);">Edit Place</div>
+            <button onclick="closeEditModal()" style="background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;">✕</button>
+          </div>
+          <input type="hidden" id="edit-place-id">
+          <div class="add-place-form">
+            <div class="form-group">
+              <label class="form-label">Place Name</label>
+              <input class="form-input" id="edit-name">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tagline</label>
+              <input class="form-input" id="edit-tagline">
+            </div>
+            <div class="form-group form-group-full">
+              <label class="form-label">Description</label>
+              <textarea class="form-input" id="edit-desc" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Entry Fee</label>
+              <input class="form-input" id="edit-fee">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Timings</label>
+              <input class="form-input" id="edit-timings">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Best Time to Visit</label>
+              <input class="form-input" id="edit-best-time">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <select class="form-input" id="edit-category">
+                <option>Historical Monument</option>
+                <option>Lake &amp; Monument</option>
+                <option>Lake &amp; Nature</option>
+                <option>Heritage Palace</option>
+                <option>Museum</option>
+                <option>Temple</option>
+                <option>Park &amp; Garden</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Address</label>
+              <input class="form-input" id="edit-address">
+            </div>
+            <div class="form-group form-group-full">
+              <label class="form-label">Photo URLs (comma separated, 3–5 photos)</label>
+              <textarea class="form-input" id="edit-photos" rows="3" placeholder="https://...jpg, https://...jpg"></textarea>
+              <div style="font-size:11px;color:var(--text3);margin-top:4px;">Use Wikipedia Commons or direct image URLs. These will be shown in the user portal gallery.</div>
+            </div>
+            <div class="form-group form-group-full" style="display:flex;gap:12px;justify-content:flex-end;">
+              <button class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+              <button class="btn btn-primary" onclick="saveEditPlace()">💾 Save Changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video Feeds -->
+      <div id="admin-video" class="admin-section">
+        <div class="admin-header">
+          <div class="admin-title">Live Video Feeds</div>
+          <div class="admin-subtitle">
+            Upload a video from any place to run crowd analysis. Results are stored and shown in the user portal.
+            <div style="font-size:12px; color:var(--text3); margin-top:6px;">
+              📌 Future: Direct CCTV integration with govt approval. Currently uses uploaded video for crowd estimation.
+            </div>
+          </div>
+        </div>
+        <div class="video-grid" id="video-grid"></div>
+        <div class="info-card" style="margin-top:24px;">
+          <div class="info-card-title">Upload Video for Crowd Analysis</div>
+          <div class="form-group">
+            <label class="form-label">Select Place</label>
+            <select class="form-input" id="video-place-select">
+              <!-- Populated dynamically by updatePlaceSelects() -->
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Upload Video (MP4/WebM)</label>
+            <input class="form-input" type="file" accept="video/*" id="video-upload" onchange="analyzeVideo(this)">
+          </div>
+          <div id="video-analysis-result" style="display:none; margin-top:16px;"></div>
+        </div>
+      </div>
+
+      <!-- Crowd Data -->
+      <div id="admin-crowd" class="admin-section">
+        <div class="admin-header">
+          <div class="admin-title">Crowd Data Management</div>
+          <div class="admin-subtitle">View and update historical crowd data — auto-updated from video analysis</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-title">Manual Data Entry</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:12px; align-items:end;">
+            <div class="form-group" style="margin:0">
+              <label class="form-label">Place</label>
+              <select class="form-input" id="data-place">
+                <option value="hussain_sagar">Hussain Sagar</option>
+                <option value="golconda_fort">Golconda Fort</option>
+                <option value="charminar">Charminar</option>
+                <option value="osman_sagar">Osman Sagar</option>
+                <option value="chowmahalla">Chowmahalla Palace</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin:0">
+              <label class="form-label">Date</label>
+              <input class="form-input" type="date" id="data-date">
+            </div>
+            <div class="form-group" style="margin:0">
+              <label class="form-label">Crowd Count</label>
+              <input class="form-input" type="number" id="data-count" placeholder="e.g. 3500">
+            </div>
+            <button class="btn btn-primary" onclick="addCrowdData()">Add</button>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-title">Recent Entries</div>
+          <div id="recent-data-list"></div>
+        </div>
+      </div>
+
+      <!-- Forecast -->
+      <div id="admin-forecast" class="admin-section">
+        <div class="admin-header">
+          <div class="admin-title">Forecast Engine</div>
+          <div class="admin-subtitle">Holt-Winters predictions — updated automatically with new data</div>
+        </div>
+        <div id="admin-forecast-cards"></div>
+      </div>
+
+      <!-- Add Place -->
+      <div id="admin-add-place" class="admin-section">
+        <div class="admin-header">
+          <div class="admin-title">Add New Place</div>
+          <div class="admin-subtitle">Expand coverage to new Hyderabad landmarks</div>
+        </div>
+        <div class="info-card">
+          <div class="add-place-form">
+            <div class="form-group">
+              <label class="form-label">Place Name</label>
+              <input class="form-input" id="np-name" placeholder="e.g. Salar Jung Museum">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tagline</label>
+              <input class="form-input" id="np-tagline" placeholder="e.g. The Largest One-Man Collection">
+            </div>
+            <div class="form-group form-group-full">
+              <label class="form-label">Description</label>
+              <textarea class="form-input" id="np-desc" rows="3" placeholder="Brief description of the place..."></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <select class="form-input" id="np-category">
+                <option>Historical Monument</option>
+                <option>Lake &amp; Nature</option>
+                <option>Heritage Palace</option>
+                <option>Museum</option>
+                <option>Temple</option>
+                <option>Park &amp; Garden</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Entry Fee</label>
+              <input class="form-input" id="np-fee" placeholder="e.g. ₹50">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Timings</label>
+              <input class="form-input" id="np-timings" placeholder="e.g. 9 AM - 5 PM">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Address</label>
+              <input class="form-input" id="np-address" placeholder="Full address">
+            </div>
+            <div class="form-group form-group-full">
+              <label class="form-label">Photo URLs (comma separated)</label>
+              <input class="form-input" id="np-photos" placeholder="https://...jpg, https://...jpg">
+            </div>
+            <div class="form-group form-group-full">
+              <label class="form-label">Upload Place Images</label>
+              <input class="form-input" type="file" accept="image/*" multiple="" id="np-images">
+            </div>
+            <div class="form-group form-group-full">
+              <label class="form-label">Upload Place Video</label>
+              <input class="form-input" type="file" accept="video/*" id="np-video">
+            </div>
+            <div class="form-group form-group-full">
+              <button class="btn btn-primary" onclick="addNewPlace()">➕ Add Place</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings -->
+      <div id="admin-settings" class="admin-section">
+        <div class="admin-header">
+          <div class="admin-title">System Settings</div>
+          <div class="admin-subtitle">Configure alerts, thresholds, and data refresh rates</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-title">Crowd Thresholds</div>
+          <div style="display:grid; gap:16px; max-width:500px;">
+            <div class="form-group">
+              <label class="form-label">Low Risk (% of capacity)</label>
+              <input class="form-input" type="number" value="40" id="thresh-low">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Medium Risk (% of capacity)</label>
+              <input class="form-input" type="number" value="70" id="thresh-med">
+            </div>
+            <div class="form-group">
+              <label class="form-label">High Risk (% of capacity)</label>
+              <input class="form-input" type="number" value="90" id="thresh-high">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Data Refresh Interval (minutes)</label>
+              <input class="form-input" type="number" value="15" id="refresh-interval">
+            </div>
+            <button class="btn btn-primary" onclick="saveSettings()">💾 Save Settings</button>
+          </div>
+        </div>
+        <div class="info-card" style="margin-top:0">
+          <div class="info-card-title">Alert Configuration</div>
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <label style="display:flex; align-items:center; gap:10px; font-size:13px; color:var(--text2); cursor:pointer;">
+              <input type="checkbox" checked="" id="alert-high"> Send alerts when crowd reaches HIGH level
+            </label>
+            <label style="display:flex; align-items:center; gap:10px; font-size:13px; color:var(--text2); cursor:pointer;">
+              <input type="checkbox" checked="" id="alert-auto"> Auto-update dataset from video analysis
+            </label>
+            <label style="display:flex; align-items:center; gap:10px; font-size:13px; color:var(--text2); cursor:pointer;">
+              <input type="checkbox" id="alert-govt"> Send daily report to government portal
+            </label>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /admin-main -->
+  </div><!-- /admin-layout -->
+</div><!-- /admin-portal -->
+
+</div><!-- /app -->
+
+<!-- ===== MODALS ===== -->
+
+<!-- User Login Modal -->
+<div class="modal-overlay" id="user-login-modal">
+  <div class="modal">
+    <div class="modal-title">Welcome to CrowdSense</div>
+    <div class="modal-sub">Enter your mobile number to continue. An OTP will be sent for verification.</div>
+    <div id="otp-step-1">
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input class="form-input" id="login-name" type="text" placeholder="Your name" autocomplete="name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mobile Number</label>
+        <div style="display:flex; gap:8px;">
+          <input class="form-input" value="+91" style="width:60px; text-align:center;" readonly="">
+          <input class="form-input" id="login-phone" type="tel" placeholder="9876543210" style="flex:1;" inputmode="numeric" autocomplete="tel-national" maxlength="10">
+        </div>
+      </div>
+      <button class="btn btn-primary btn-full" onclick="sendOTP()">Send OTP →</button>
+    </div>
+    <div id="otp-step-2" style="display:none;">
+      <div class="modal-sub">Enter the OTP to continue.</div>
+      <div class="form-group">
+        <label class="form-label">Enter 6-Digit OTP</label>
+        <div class="otp-grid" id="otp-grid"></div>
+      </div>
+      <div class="otp-note">Didn't receive? <span onclick="sendOTP()">Resend OTP</span></div>
+      <button class="btn btn-primary btn-full mt-16" onclick="verifyOTP()">Verify &amp; Continue →</button>
+    </div>
+  </div>
+</div>
+
+<!-- Admin Login Modal -->
+<div class="modal-overlay" id="admin-login-modal">
+  <div class="modal">
+    <div class="modal-title">Admin Access</div>
+    <div class="modal-sub">Restricted to authorized administrators only.</div>
+    <div class="form-group">
+      <label class="form-label">Admin Username</label>
+      <input class="form-input" id="admin-user" type="text" placeholder="admin">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input class="form-input" id="admin-pass" type="password" placeholder="••••••••">
+    </div>
+    <button class="btn btn-primary btn-full" onclick="loginAdmin()">Login to Admin →</button>
+    <div class="otp-note" style="margin-top:12px;">Demo access is enabled in this build for presentation purposes.</div>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="Expanded place preview">
+</div>
+
+<script src="script.js"></script>
+</body></html>
